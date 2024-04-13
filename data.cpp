@@ -1,6 +1,7 @@
 #include "data.h"
 #include <cstring>
 #include <cstdarg>
+#include <ostream>
 #include <vector>
 
 /* PycData */
