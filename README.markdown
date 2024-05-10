@@ -13,7 +13,7 @@ As the name implies, Decompyle++ is written in C++.
 If you wish to contribute, please fork us on github at 
 https://github.com/zrax/pycdc
 
-## Building Decompyle++
+## Building Decompyle++ executables
 * Generate a project or makefile with [CMake](http://www.cmake.org) (See CMake's documentation for details)
   * The following options can be passed to CMake to control debug features:
 
@@ -27,6 +27,11 @@ https://github.com/zrax/pycdc
   * For projects (e.g. MSVC), open the generated project file and build it
   * For makefiles, just run `make`
   * To run tests (on \*nix or MSYS), run `make check`
+
+## Installing the Python package
+* Ensure `CMake >= 3.12` is installed
+* Create a virtual environment `python3 -m venv venv`
+* Run `pip install .`
 
 ## Usage
 **To run pycdas**, the PYC Disassembler:
@@ -42,6 +47,19 @@ Any errors are printed to stderr.
 Both tools support Python marshalled code objects, as output from `marshal.dumps(compile(...))`.
 
 To use this feature, specify `-c -v <version>` on the command line - the version must be specified as the objects themselves do not contain version metadata.
+
+**To use the Python bindings** with marshaled code, run the following Python script:
+```python
+import marshal
+from pycdc import decompyle
+
+async def test():
+    a = 5
+    data = foobar(a)
+    return data
+
+print(decompyle(marshal.dumps(test.__code__)))
+```
 
 ## Authors, Licence, Credits
 Decompyle++ is the work of Michael Hansen and Darryl Pogue.

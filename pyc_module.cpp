@@ -245,6 +245,18 @@ void PycModule::loadFromMarshalledFile(const char* filename, int major, int mino
     m_code = LoadObject(&in, this).cast<PycCode>();
 }
 
+void PycModule::loadFromMarshalledStream(PycData& stream, int major, int minor)
+{
+    if (!isSupportedVersion(major, minor)) {
+        fprintf(stderr, "Unsupported version %d.%d\n", major, minor);
+        return;
+    }
+    m_maj = major;
+    m_min = minor;
+    m_unicode = (major >= 3);
+    m_code = LoadObject(&stream, this).cast<PycCode>();
+}
+
 PycRef<PycString> PycModule::getIntern(int ref) const
 {
     if (ref < 0 || (size_t)ref >= m_interns.size())
